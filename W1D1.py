@@ -35,42 +35,70 @@ while True:
 
 
 import random
+from tkinter import *
+global flag
 
-verbs = ['abandoning', 'accusing','adopting','dancing with', 'debugging', 'defending','demanding','tackling','relaxing with', 'repairing','riding','roasting']
-adjectives = ['an amazing', 'an awkward','an ancient','an edible','an errie','an effeminate','a kind-hearted','a knurled','a rabid', 'a raging','a rank','a raspy']
-nouns2 = ['stray dog','feral cat','cross-eyed gazelle','wounded rat','homless man','dead bird','wizard','sasquatch','billy goat']
+flag=False
 
-try:
-    while True:
-        noun = " "
-        verb = " "
-        adjective = " "
-        noun2 = " "
+def display_lib(v,a,n2):
 
-        noun = input("Enter your name or 'quit' to exit: ")
-        if noun.lower() == 'quit':
-            print("Thanks for playing!")
-            break
-        place = input("Name a place of business or \n"
-                      "someone's house that you know: ")
+    v,a,n2=randomize()
+    
+    n=name_entry.get()
+    p=place_entry.get()
 
-        #generate the pieces:
-        verb = verbs[random.randrange(0,len(verbs))]
-        adjective = adjectives[random.randrange(0,len(adjectives))]
-        noun2 = nouns2[random.randrange(0,len(nouns2))]
+    pu_window = Toplevel(win)
+    pu_window.title("LMAO!")
 
+    pu_frame = Frame(pu_window)
+    pu_frame.pack(padx=20,pady=20)
 
-        string = f"{noun}, was seen {verb} {adjective} {noun2} out behind {place}"
-        print(string)
+    message = n+" "+"was seen"+" "+v+" "+a+" "+n2+" "+"out behind"+" "+p
 
-except KeyboardInterrupt:
-    print(f"\n Thanks for playing!")
-except UnboundLocalError:
-    print("Unhandled Exception")
+    output_label = Label(pu_frame,text=message,font=('Helvetica','14','bold'))
+    output_label.grid(row=1,column=1)
+
+def randomize():
+    verbs = ['abandoning', 'accusing','adopting','dancing with', 'debugging', 'defending','demanding','tackling','relaxing with', 'repairing','riding','roasting']
+    adjectives = ['an amazing', 'an awkward','an ancient','an edible','an errie','an effeminate','a kind-hearted','a knurled','a rabid', 'a raging','a rank','a raspy']
+    nouns2 = ['stray dog','feral cat','cross-eyed gazelle','wounded rat','homless man','dead bird','wizard','sasquatch','billy goat']
+
+    verb = verbs[random.randrange(0,len(verbs))]
+    adjective = adjectives[random.randrange(0,len(adjectives))]
+    noun2 = nouns2[random.randrange(0,len(nouns2))]
+
+    return verb,adjective,noun2
+
+win = Tk()
+win.title("Get R Done")
+
+win_frame = Frame(win)
+win_frame.pack(padx=20,pady=20)
+
+name_entry_label = Label(win_frame,text="Enter Your Name: ")
+name_entry_label.grid(row=1,column=0)
+
+name_entry = Entry(win_frame,width=30)
+name_entry.grid(row=1,column=1)
+
+place_entry_label = Label(win_frame,text="Name of a place of business or \n"
+                "someone's house that you know:")
+place_entry_label.grid(row=2,column=0)
+
+place_entry = Entry(win_frame,width=30)
+place_entry.grid(row=2,column=1)
+
+verb,adjective,noun2 = randomize()
+
+submit_btn = Button(win_frame,text="Submit",command=lambda: display_lib(verb,adjective,noun2))
+submit_btn.grid(row=4,column=1)
+
+win.mainloop()
 
 
 
 ######################   Exercise #3
+
 
 age = ''
 while True:
@@ -103,9 +131,6 @@ from math import *
 x=int(input("Is this number a square?: "))
 
 print(f"The square root of {x} is {int(sqrt(x))}") if isqrt(x)*isqrt(x)==x else print(f"{x} is not a square number")
-
-
-
 
 
 
